@@ -5,5 +5,5 @@ from django.template.loader import render_to_string
 
 
 def contact(request):
-    content = render_to_string("contact/index.html")
+    content = render_to_string("contact/base.html")
     return HttpResponse(content)

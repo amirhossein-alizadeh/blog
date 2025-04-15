@@ -20,8 +20,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path("", views.index, name="home"),
+    path("", include("blogs.urls"), name="home"),
     path("admin/", admin.site.urls),
     path("contact/", include("contact.urls")),
-    path("blogs/", include("blogs.urls")),
 ]
