@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	{{ blog.title }}
+{% endblock %}
+
+{% block header_references %}
+	<link rel="stylesheet" href="{% static 'blogs/blog_detail.css' %}">
+{% endblock %}
+
+{% block main %}
+	<section id="summary">
+        <h2>
+            {{blog.title}}
+        </h2>
+        <article>
+            <img src="{% static "images/"|add:blog.image %}" alt="{{blog.title}}">
+            <address>By {{blog.author}}</address>
+            <div>last updated on <time>{{blog.date}}</time></div>
+        </article>
+    </section>
+
+    <section id="detail">
+        <p>{{blog.content}}</p>
+    </section>
+
+{% endblock %}
+

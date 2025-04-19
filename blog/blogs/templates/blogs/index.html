@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-
-
 {% block main %}
     <article>
         <section class="hero" id="home" aria-label="home">
@@ -58,7 +56,28 @@
         - #RECENT POST
       -->
 
-        {% include 'blogs/includes/blogs.html' with head="Recent Posts" %}
+      <section class="section recent-post" id="recent" aria-labelledby="recent-label">
+        <div class="container">
+    
+            <div class="post-main">
+    
+                <h2 class="headline headline-2 section-title">
+                    <span class="span">{{ head }}</span>
+                </h2>
+    
+                <p class="section-text">
+                    Don't miss the latest trends
+                </p>
+                <ul class="grid-list">
+                    {% for post in latest_posts %}
+                        {% include "blogs/includes/blog_card.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+    
+    
+        </div>
+    </section>
     </article>
 
 {% endblock %}

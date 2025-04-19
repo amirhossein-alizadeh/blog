@@ -1,33 +1,75 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from datetime import date
 
 
-blogs = {
-    1: "سلام بر تستر عزیز",
-    2: "حالت چطوره ",
-    3: "هیهات من الذله",
-    4: "حال من امروز بهتر از این نمیشه",
-    5: "یادت نره این سایت روزی قراره همه ببیننش",
-    6: "ستاره آی ستاره",
-    733: None,
-}
+all_posts = [
+    {
+        "id": "1",
+        "title": "سلام",
+        "author": "amirhossein",
+        "image": "author-1.png",
+        "date": date(2024, 5, 3),
+        "short_description": "سلام بر تستر عزیز",
+        "content": """
+            asdfghjk,lkjhggredwfgtyukio;likhgfvdsftr56uik,hngvfdet5yuihjmnvc
+            xfrt5u7ujkhmnvc xdfgtyujhmnvc xdergtyujmhnvbcfdrtyukjhmnvbcdfrgtyu67ilkjhmngvc       
+            xzdcfghyujkmnvbcdsaSERTYJHG
+        """
+    },
+    {
+        "id": "2",
+        "title": "احوال پرسی",
+        "author": "amirhossein",
+        "image": "author-2.png",
+        "date": date(2024, 6, 3),
+        "short_description": "حالت چطوره",
+        "content": """
+            asdfghjk,lkjhggredwfgtyukio;likhgfvdsftr56uik,hngvfdet5yuihjmnvc
+            xfrt5u7ujkhmnvc xdfgtyujhmnvc xdergtyujmhnvbcfdrtyukjhmnvbcdfrgtyu67ilkjhmngvc       
+            xzdcfghyujkmnvbcdsaSERTYJHG
+        """
+    },
+    {
+        "id": "3",
+        "title": "شعار",
+        "author": "amirhossein",
+        "image": "author-3.png",
+        "date": date(2024, 6, 5),
+        "short_description": "هیهات من الذله",
+        "content": """
+            asdfghjk,lkjhggredwfgtyukio;likhgfvdsftr56uik,hngvfdet5yuihjmnvc
+            xfrt5u7ujkhmnvc xdfgtyujhmnvc xdergtyujmhnvbcfdrtyukjhmnvbcdfrgtyu67ilkjhmngvc       
+            xzdcfghyujkmnvbcdsaSERTYJHG
+        """
+    }
+
+]
 
 
 # Create your views here.
-
+def get_date(post):
+    return post["date"]
 
 
 def home(request):
-    return render(request, "blogs/index.html")
+    sorted_posts = sorted(all_posts, key=get_date)
+    latest_posts = sorted_posts[-2:]
+    
+    return render(request, "blogs/index.html", context={
+        "latest_posts": latest_posts
+    })
 
 def blog_index(request):
-    blogs_list = list(blogs.keys())
-    data = {"blogs": blogs_list}
-    return render(request, "blogs/list_blogs.html", data)
+    sorted_posts = sorted(all_posts, key=get_date)
+    return render(request, "blogs/list_blogs.html", context={
+        "posts": sorted_posts
+    })
 
 
-def get_blog(request, blog_id):
-    description = blogs[blog_id]
-    data = {"id": blog_id, "description": description}
-    return render(request, "blogs/blog_view.html", context=data)
+def blog_detail(request, blog_id):
+    context = all_posts[blog_id]
+    return render(request, "blogs/blog_detail.html", context={
+        "blog": context
+    })
